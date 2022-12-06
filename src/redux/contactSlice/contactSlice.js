@@ -22,8 +22,6 @@ export const contactsSlice = createSlice({
             finalContact.contactName.toLowerCase()
         )
       ) {
-        console.log(state);
-
         alert(`${finalContact.contactName} is already in contact list.`);
         return;
       }
