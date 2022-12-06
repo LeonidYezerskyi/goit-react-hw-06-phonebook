@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-// import { nanoid } from "nanoid";
 
 import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
@@ -23,7 +22,7 @@ const App = () => {
     localStorage.setItem('contacts', JSON.stringify(contacts))
   }, [contacts]);
 
-  const addContact = (formData) => {
+  const addNewContact = (formData) => {
     dispatch(addContact(formData));
   }
 
@@ -38,10 +37,6 @@ const App = () => {
   }
 
   const dispatch = useDispatch();
-
-  // const deleteContact = (id) => {
-  //   dispatch(deleteContact(id));
-  // }
 
   const onDeleteContact = (contactId) => {
     dispatch(deleteContact(contactId));
@@ -63,7 +58,7 @@ const App = () => {
     >
       <div className={css.paper}>
         <h1 className={css.title}> Phonebook</h1>
-        <ContactForm addContact={addContact} />
+        <ContactForm addContact={addNewContact} />
 
         <h2 className={css.title}>Contacts</h2>
         <Filter onChangeFilter={onChangeFilter} filter={filter} />

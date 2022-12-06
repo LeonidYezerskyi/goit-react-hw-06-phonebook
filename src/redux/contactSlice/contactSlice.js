@@ -15,14 +15,15 @@ export const contactsSlice = createSlice({
         id: nanoid(),
         ...contactPart,
       };
+      console.log(finalContact);
+
       if (
         state.contacts.some(
           contact =>
-            contact.name.toLowerCase() ===
-            finalContact.contactName.toLowerCase()
+            contact.name.toLowerCase() === finalContact.name.toLowerCase()
         )
       ) {
-        alert(`${finalContact.contactName} is already in contact list.`);
+        alert(`${finalContact.name} is already in contact list.`);
         return;
       }
 
