@@ -1,7 +1,8 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
 
 const initialState = {
-  contacts: JSON.parse(localStorage.getItem('contacts')) ?? [],
+  contacts: [],
+  filter: '',
 };
 
 export const contactsSlice = createSlice({
@@ -15,7 +16,6 @@ export const contactsSlice = createSlice({
         id: nanoid(),
         ...contactPart,
       };
-      console.log(finalContact);
 
       if (
         state.contacts.some(
@@ -37,8 +37,13 @@ export const contactsSlice = createSlice({
         contact => contact.id !== contactId
       );
     },
+
+    filterContact(state, action) {
+      state.filter = action.payload;
+    },
   },
 });
 
-export const { addContact, deleteContact } = contactsSlice.actions;
+export const { addContact, deleteContact, filterContact } =
+  contactsSlice.actions;
 export const contactReducer = contactsSlice.reducer;
