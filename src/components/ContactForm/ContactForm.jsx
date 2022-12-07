@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from "prop-types";
 import css from './ContactForm.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactSlice/contactSlice';
+import { nanoid } from '@reduxjs/toolkit';
 
 const INITIAL_FORM_DATA = {
     contactName: '',
@@ -10,7 +11,7 @@ const INITIAL_FORM_DATA = {
 };
 
 const ContactForm = () => {
-
+    const contacts = useSelector((state) => state.contactsData.contacts);
     const [formData, setFormData] = useState(INITIAL_FORM_DATA)
     const dispatch = useDispatch();
 
@@ -23,12 +24,25 @@ const ContactForm = () => {
     const onSubmitForm = e => {
         e.preventDefault();
 
-        const contactPart = {
+        const newContact = {
+            id: nanoid(),
             name: formData.contactName,
             number: formData.contactNumber,
         };
 
-        dispatch(addContact(contactPart));
+        if (
+            contacts.some(
+                contact =>
+                    contact.name.toLowerCase() === newContact.name.toLowerCase()
+            )
+        ) {
+            alert(`${newContact.name} is already in contact list.`);
+            return;
+        }
+
+        const newContacts = [newContact, ...contacts];
+
+        dispatch(addContact(newContacts));
         reset();
     };
 
